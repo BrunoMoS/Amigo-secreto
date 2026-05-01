@@ -4,6 +4,12 @@ const state = {
   friends: [],
 };
 
+/*
+O que é: guarda os dados principais da aplicação.
+Aqui: temos uma lista (array) chamada friends, que começa vazia.
+Função: é a “memória” do programa, onde ficam os nomes dos amigos adicionados.
+*/
+
 // VALIDATION — regras de negócio / validação
 
 const validation = {
@@ -21,6 +27,12 @@ const validation = {
     return state.friends.length >= 4;
   },
 };
+
+/*
+isNameEmpty(name): verifica se o nome digitado está vazio (só espaços).
+isNameDuplicate(name): checa se o nome já foi adicionado antes, comparando em minúsculas para evitar duplicatas como "Ana" e "ana".
+hasEnoughFriends(): confirma se já temos pelo menos 4 amigos para poder sortear.
+*/
 
 // DOM — leitura e escrita na interface
 
@@ -59,12 +71,19 @@ const dom = {
   },
 };
 
+/*
+getInputValue(): pega o texto digitado no campo de entrada.
+clearInput(): limpa o campo de entrada.
+renderFriendsList(friends): mostra na tela a lista de amigos numerada.
+renderDrawResult(pairs): mostra o resultado do sorteio (quem dá presente para quem).
+clearDrawResult(): apaga o resultado anterior.
+focusInput(): coloca o cursor de volta no campo de entrada.
+*/
+
 // DRAW — lógica do sorteio
 
 const drawService = {
-  /**
-   * Embaralha um array usando Fisher-Yates.
-   */
+  
   shuffle(list) {
     const arr = [...list];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -74,16 +93,10 @@ const drawService = {
     return arr;
   },
 
-  /**
-   * Gera uma derangement (permutação sem ponto fixo):
-   * ninguém tira a si mesmo.
-   * Retorna um array de pares [{ giver, winner }, ...] com todos os participantes.
-   */
   drawAll() {
     const givers = state.friends;
     let winners;
 
-    // Tenta até obter uma derangement válida
     do {
       winners = this.shuffle(givers);
     } while (winners.some((winner, i) => winner === givers[i]));
@@ -91,6 +104,13 @@ const drawService = {
     return givers.map((giver, i) => ({ giver, winner: winners[i] }));
   },
 };
+
+/*
+shuffle(list): embaralha os elementos de um array usando o algoritmo Fisher-Yates (mistura aleatória).
+drawAll(): faz o sorteio garantindo que ninguém tire a si mesmo.
+           Ele embaralha até encontrar uma combinação válida.
+           Depois retorna pares { giver, winner }.
+*/
 
 // HANDLERS — reações às ações do usuário
 
@@ -116,6 +136,12 @@ function add() {
   dom.focusInput();
 }
 
+/*
+add(): função chamada quando o usuário clica em "Adicionar".
+       Ela pega o nome do input, valida se não está vazio ou duplicado,
+       e se tudo estiver certo, adiciona à state.friends e atualiza a lista na tela.
+*/
+
 function draw() {
   if (!validation.hasEnoughFriends()) {
     alert("Adicione pelo menos 4 amigos para realizar o sorteio.");
@@ -126,6 +152,11 @@ function draw() {
   dom.renderDrawResult(pairs);
 }
 
+/*
+draw(): função chamada quando o usuário clica em "Sortear".
+        Ela verifica se há amigos suficientes, e se sim, realiza o sorteio e mostra o resultado.
+*/
+
 function restart() {
   state.friends = [];
   dom.renderFriendsList([]);
@@ -133,3 +164,8 @@ function restart() {
   dom.clearInput();
   dom.focusInput();
 }
+
+/*
+restart(): função chamada quando o usuário clica em "Reiniciar".
+           Ela limpa a lista de amigos, o resultado do sorteio, e prepara a interface para um novo jogo.
+*/
