@@ -18,7 +18,7 @@ const validation = {
   },
 
   hasEnoughFriends() {
-    return state.friends.length >= 2;
+    return state.friends.length >= 4;
   },
 };
 
@@ -118,7 +118,7 @@ function add() {
 
 function draw() {
   if (!validation.hasEnoughFriends()) {
-    alert("Adicione pelo menos 2 amigos para realizar o sorteio.");
+    alert("Adicione pelo menos 4 amigos para realizar o sorteio.");
     return;
   }
 
