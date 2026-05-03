@@ -175,7 +175,7 @@ body {
 
 .primary {
   background-color: #1875e8;
-  color: #fff;
+  color: #ffffff;
 }
 
 .section--results {
@@ -187,7 +187,7 @@ body {
 }
 
 .section__title {
-  color: #fff;
+  color: #ffffff;
   font-family: Chakra Petch;
   font-size: 88px;
   font-style: normal;
@@ -196,11 +196,17 @@ body {
   margin: 0 0 80px 0;
 }
 
-.section__title > span {
+.span__title {
   color: #1875e8;
+  font-family: Chakra Petch;
+  font-size: 88px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 80%;
+  margin: 0 0 80px 0;
 }
 
 .secondary {
-  background-color: #fff;
+  background-color: #ffffff;
   color: #1875e8;
 }
